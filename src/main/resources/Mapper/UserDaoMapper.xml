@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.yks.jdbc.dao.UserDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+    <select id="queryUserById" resultType="com.yks.jdbc.entity.User">
+        select * from `users` where user = #{userName}
+    </select>
+    <select id="queryUserAll" resultType="com.yks.jdbc.entity.User">
+        select * from `users`
+    </select>
+    <insert id="insertUser" parameterType="com.yks.jdbc.entity.User">
+        INSERT into users(user,
+                            plugin,
+                            authentication_string,
+                            password_expired,
+                            account_locked
+                            )VALUES(
+                            #{user},
+                            #{plugin},
+                            #{authenticationString},
+                            #{password_expired},
+                            #{account_locked}
+                            )
+
+    </insert>
+    <update id="updateUser" parameterType="com.yks.jdbc.entity.User">
+        update `users`
+        <set>
+            authentication_string=#{authenticationString},
+            password_expired=#{password_expired},
+            account_locked=#{account_locked}
+        </set>
+        where USER  = #{user}
+
+
+    </update>
+    <delete id="deleteUser">
+        delete from users where user = #{user}
+    </delete>
+</mapper>
